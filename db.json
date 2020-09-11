@@ -1,0 +1,114 @@
+{
+  "alertId": "raxhighcpu",
+  "Description": "",
+  "NotificationType": "public",
+  "LinkToSearchResults": "https://portal.azure.com#@01c999f0-c6f3-47dc-92cf-4f2d06feda2c/blade/Microsoft_Azure_Monitoring_Logs/LogsBlade/source/Alerts.EmailLinks/scope/%7B%22resources%22%3A%5B%7B%22resourceId%22%3A%22%2Fsubscriptions%2F5a085be1-14eb-4d77-9954-f750ce048602%2FresourceGroups%2Fci-euwe01-siem-oms-01%2Fproviders%2FMicrosoft.OperationalInsights%2Fworkspaces%2FEUWE01SIEMOMS01%22%7D%5D%7D/q/eJyFkE0LgkAURff9irtToUVt2hmERARRGtk2pulVRjMj81EU%2FvjMVKxN23cP515eTPrYK3A%2Fkybs1mSU05zmB4QhPK9NVvsLcbtkgqog1oqTMUp7YPKASDlpSVcxV9KyTJoOhE0m6EPOpbFMcmpNu42y7NpoRO5KDzIJ34%2FLZWj6uw1fA5A4coQFyZM9ewWME4Lp7EmYbGdJOk2nCMFuJ782bNnVUYD9o21rKhp%2BPAwC%2FIiiOP2n6XU8JT4eDcpLrtX7by3Ur9MX/prettify/1/timespan/2020-09-10T19%3a28%3a18.0000000Z%2f2020-09-10T19%3a33%3a18.0000000Z",
+  "workspaceId": "214b701f-ce16-441d-90d2-fab76df9cfb0",
+  "searchInterval": "00:05:00",
+  "alertValue": "0",
+  "alertName": "Rackspace - On-Premise CPU Alert",
+  "IncludeSearchResults": true,
+  "SearchQuery": "Perf\n| where _ResourceId == ''\n| where ObjectName == 'Processor' and CounterName contains 'Processor Time' and InstanceName == '_Total' and Computer in ((Perf | where CounterName == 'Processor Queue Length'| summarize AVGQUEUE = avg(CounterValue) by Computer| where AVGQUEUE>1)) | summarize AVGCPU = avg(CounterValue) by Computer\n| where AVGCPU>60\n| project Computer, AVGCPU",
+  "SearchResults": {
+    "tables": [
+      {
+        "name": "PrimaryResult",
+        "columns": [
+          {
+            "name": "Computer",
+            "type": "string"
+          },
+          {
+            "name": "AVGCPU",
+            "type": "real"
+          }
+        ],
+        "rows": [
+          [
+            "bsas-notesbkp.ci.corp",
+            67.16045112609864
+          ],
+          [
+            "BRSA01eCTXDEV04.ci.corp",
+            63.69712842305501
+          ]
+        ]
+      }
+    ],
+    "statistics": {
+      "query": {
+        "executionTime": 0.8593104,
+        "resourceUsage": {
+          "cache": {
+            "memory": {
+              "hits": 19475,
+              "misses": 0,
+              "total": 19475
+            },
+            "disk": {
+              "hits": 0,
+              "misses": 0,
+              "total": 0
+            },
+            "shards": {
+              "hot": {
+                "hitbytes": 0,
+                "missbytes": 0,
+                "retrievebytes": 0
+              },
+              "cold": {
+                "hitbytes": 0,
+                "missbytes": 0,
+                "retrievebytes": 0
+              },
+              "bypassbytes": 0
+            }
+          },
+          "cpu": {
+            "user": "00:00:01.3750000",
+            "kernel": "00:00:00",
+            "totalCpu": "00:00:01.3750000"
+          },
+          "memory": {
+            "peakPerNode": 203445472
+          }
+        },
+        "inputDatasetStatistics": {
+          "extents": {
+            "total": 3572,
+            "scanned": 16,
+            "scannedMinDatetime": "2020-09-09T22:02:36.4965129Z",
+            "scannedMaxDatetime": "2020-09-10T19:35:00.8494855Z"
+          },
+          "rows": {
+            "total": 80522585620,
+            "scanned": 52070186
+          },
+          "rowstores": {
+            "scannedRows": 1031766,
+            "scannedValuesSize": 75657304
+          },
+          "shards": {
+            "queriesGeneric": 0,
+            "queriesSpecialized": 0
+          }
+        },
+        "datasetStatistics": [
+          {
+            "tableRowCount": 2,
+            "tableSize": 79
+          }
+        ]
+      }
+    },
+    "dataSources": [
+      {
+        "resourceId": "/subscriptions/5a085be1-14eb-4d77-9954-f750ce048602/resourcegroups/ci-euwe01-siem-oms-01/providers/microsoft.operationalinsights/workspaces/euwe01siemoms01",
+        "region": "westeurope",
+        "tables": [
+          "Perf"
+        ]
+      }
+    ]
+  }
+}
